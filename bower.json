@@ -1,0 +1,21 @@
+{
+  "name": "component-contactos",
+  "homepage": "https://github.com/SofttekFormacion2017/component-contactos",
+  "description": "componente contactos",
+  "main": [
+    "contactos.js"
+  ],
+  "authors": [
+    "Equipo contactos"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {}
+}
