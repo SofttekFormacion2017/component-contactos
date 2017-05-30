@@ -12,7 +12,7 @@
       </div>
   <table class="table table-responsive table-striped">
     <thead>
-      <tr  ng-init="$ctrl.orderByPropiedad=''; $ctrl.cabecera = ['id','Tipo Valor','valor']">
+      <tr  ng-init="$ctrl.orderByPropiedad=''; $ctrl.cabecera = ['id','tipo','valor']">
         <th ng-repeat = "campo in $ctrl.cabecera"  ng-click="$ctrl.orderByPropiedad == campo ? $ctrl.orderReverse = !$ctrl.orderReverse : $ctrl.orderReverse = false; $ctrl.reverse = $ctrl.orderReverse  ? '-' : ''; $ctrl.orderByPropiedad=campo"> {{campo}} <span class="glyphicon" ng-class="
           $ctrl.orderByPropiedad != campo ? 'glyphicon-sort' : ($ctrl.orderReverse ?  'glyphicon-sort-by-attributes-alt' :
           'glyphicon-sort-by-attributes')" />
