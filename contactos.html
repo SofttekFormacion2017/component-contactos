@@ -1,0 +1,30 @@
+<div class="container-fluid">
+    <h1>Contactos</h1>
+    <form name="formulario">
+        <div class="formulario">
+            <div class="marginless-bottom form-group col-md-3 col-sm-2 col-xs-2 container-fluid">
+                <label for="ID">ID: </label>
+                <input disabled class="form-control" name="id" ng-model="$ctrl.candidato.id">
+                <span class="oculto help-block">La Id es obligatoria</span>
+            </div>
+            <div class="marginless-bottom form-group col-md-4 col-sm-5 col-xs-8" ng-class="{ 'has-error' : formulario.nombre.$invalid && !formulario.nombre.$pristine, 'has-success': !formulario.nombre.$focused &&  formulario.nombre.$valid}">
+                <label for="nombre">Tipo de Contacto <span class="glyphicon glyphicon-asterisk"></span> :</label>
+                <input id="inputSuccess2" class="form-control has-success" name="nombre" required autofocus pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ.. ]{0,}" aria-describedby="helpBlock2" ng-model="$ctrl.candidato.nombre" ng-focus="focus=true" ng-blur="focus=false">
+                <span class="help-block" ng-class="!formulario.nombre.$error.pattern ? 'oculto' : ''">Sólo puede incluir letras</span>
+            </div>
+            <div class="marginless-bottom form-group col-md-4 col-sm-5 col-xs-8" ng-class="{ 'has-error' : formulario.apellido.$invalid && !formulario.apellido.$pristine, 'has-success': !formulario.apellido.$focused &&  formulario.apellido.$valid}">
+                <label for="apellido">Valor del Contacto :</label>
+                <input id="inputSuccess2" class="form-control has-success" name="apellido"  aria-describedby="helpBlock2" ng-model="$ctrl.candidato.apellido" ng-focus="focus=true" ng-blur="focus=false">
+            </div>
+            
+            <div class="form-group col-md-12 col-sm-12 col-xs-12">
+                <div class="botonera col-md-3 col-sm-5 col-xs-6 form-group ">
+                    <button type="button" ng-click="$ctrl.reset()" value="Descartar cambios" class="reset btn btn-default ">Descartar Cambios <span class ="glyphicon glyphicon-remove"></span></button>
+                    <button type="submit" ng-click="$ctrl.updateOrCreate($ctrl.candidato,formulario)" ng-disabled="formulario.$invalid" class="submit btn btn-primary">
+                  Guardar  <span class="glyphicon glyphicon-send"></span></button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<br><br>
