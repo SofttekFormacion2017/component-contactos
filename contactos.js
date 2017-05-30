@@ -130,8 +130,44 @@ function formularioContactoController($stateParams, contactosFactory, $state) {
         vm.contacto = contacto;
       }
     );
-  }
+  };
 
+  vm.desplegar = function() {
+    vm.opcionesDesplegable = [{
+        tipo: 'Email'
+      },
+      {
+        tipo: 'Teléfono'
+      },
+      {
+        tipo: 'Twitter'
+      }
+    ];
+    vm.selectTipo = vm.opcionesDesplegable[0];
+  };
+  vm.desplegar();
+
+  vm.formatearDesplegable = function(opcion) {
+    if (opcion == 'M') {
+      return 'Mail';
+    } else if (opcion == 'T') {
+      return 'Teléfono';
+    } else if (opcion == 'Tw') {
+      return 'Twitter';
+    }
+  };
+
+  /**
+   * Setea el atributo $disty del formulario y
+   * del input pasado por parámetro a true
+   * @param  {[type]} formulario [description]
+   * @param  {[type]} input      [description]
+   * @return {[type]}            [description]
+   */
+  vm.setDirty = function(formulario, input) {
+    input.$dirty = true;
+    formulario.$dirty = true;
+  };
   // vm.reset();
   //
   // if ($stateParams != 0) {
