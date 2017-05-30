@@ -1,0 +1,48 @@
+<div class="container-fluid">
+  <h1 class="h1">Lista de Contactos</h1>
+  <div class="row form-group ">
+          <div class="col-md-offset-6 col-sm-offset-3  col-md-5  col-sm-7 col-xs-9 ">
+                  <input class="form-control" type="text" placeholder="Buscar" ng-model="buscar">
+          </div>
+          <div class="row form-group  col-md-1 col-sm-1 col-xs-2">
+            <button id="split-button" type="button" class="btn btn-primary "
+            ui-sref="app.contactosDetalle({id:0})">Añadir</button>
+          </div>
+
+      </div>
+  <table class="table table-responsive table-striped">
+    <thead>
+      <tr  ng-init="$ctrl.orderByPropiedad=''; $ctrl.cabecera = ['id','Tipo Valor','valor']">
+        <th ng-repeat = "campo in $ctrl.cabecera"  ng-click="$ctrl.orderByPropiedad == campo ? $ctrl.orderReverse = !$ctrl.orderReverse : $ctrl.orderReverse = false; $ctrl.reverse = $ctrl.orderReverse  ? '-' : ''; $ctrl.orderByPropiedad=campo"> {{campo}} <span class="glyphicon" ng-class="
+          $ctrl.orderByPropiedad != campo ? 'glyphicon-sort' : ($ctrl.orderReverse ?  'glyphicon-sort-by-attributes-alt' :
+          'glyphicon-sort-by-attributes')" />
+        </th>
+        <th>Acción</th>
+      </tr>
+    </thead>
+
+    <tr ng-repeat ="cont in (contacto = ($ctrl.arrayContactos | filter:buscar)) |  orderBy: ($ctrl.reverse+$ctrl.orderByPropiedad) | limitTo:$ctrl.maxSize:($ctrl.currentPage-1)*$ctrl.maxSize  ">
+      <td ng-repeat="datosContacto in $ctrl.cabecera ">
+        {{cont[datosContacto]}}
+      </td>
+      <td class="col-md-3 col-xs-3">
+        <div class="btn-group" uib-dropdown>
+              <button id="split-button" type="button" class="btn btn-primary  ">Ver</button>
+              <button type="button" class="btn btn-primary " uib-dropdown-toggle>
+                    <span class="caret"></span>
+                    <span class="sr-only">Split button!</span>
+                </button>
+            <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="split-button">
+              <li role="menuitem"><a href="#">Ver</a></li>
+              <li role="menuitem"><a href="#">Editar</a></li>
+              <li class="divider"></li>
+              <li role="menuitem"><a href="#">Borrar</a></li>
+            </ul>
+        </div>
+      </td>
+    </tr>
+  </table>
+  <div>
+    <ul uib-pagination total-items="contacto.length" ng-model="$ctrl.currentPage" max-size="$ctrl.maxSize" class="pagination" boundary-link-numbers="true"></ul>
+  </div>
+</div>
