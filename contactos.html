@@ -1,30 +1,50 @@
-<div class="container-fluid">
-    <h1>Contactos</h1>
-    <form name="formulario">
-        <div class="formulario">
-            <div class="marginless-bottom form-group col-md-3 col-sm-2 col-xs-2 container-fluid">
-                <label for="ID">ID: </label>
-                <input disabled class="form-control" name="id" ng-model="$ctrl.candidato.id">
-                <span class="oculto help-block">La Id es obligatoria</span>
+<div class="container-fluid row">
+  <div class="col-md-2 col-xs-2"></div>
+  <div class="col-md-8 col-xs-8">
+  <h1 style="text-align: center">Contactos <small>Formulario</small></h1>
+      <form name="$ctrl.form" >
+          <div class="form-group has-feedback">
+
+
+
+            <div class="input_content sin-margen form-group col-md-offset-5 col-md-10 col-sm-3 container-fluid"
+                ng-class="{ '' : $ctrl.tecnologia.nombre ==='',
+                            'has-error' : $ctrl.form.nombre.$invalid && !$ctrl.form.nombre.$pristine,
+                            'has-success'  : $ctrl.form.nombre.$valid} ">
+                            <label for="tipo">Tipo: </label>
+                            <br>
+                            <div class="btn-group" uib-dropdown>
+                                <button type="button" class="btn btn-default" uib-dropdown-toggle>
+                                      {{$ctrl.contacto.tipo || $ctrl.opcionesDesplegable[0].tipo}} <span class="caret"></span>
+                                    <span class="sr-only">Split button!</span>
+                                </button>
+                                <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="split-button">
+                                    <li role="menuitem" ng-repeat="opcion in $ctrl.opcionesDesplegable" value="{{opcion.tipo}}" ng-selected="$ctrl.contacto.tipo === opcion.tipo">
+                                        <a href="#" ng-click="$ctrl.contacto.tipo = opcion.tipo; $ctrl.setTipo(formulario, formulario.tipo)">{{opcion.tipo}}</a>
+                                    </li>
+                                    <input ng-hide="true" name="tipo" ng-model="$ctrl.contacto.tipo">
+                                </ul>
+                            </div>
             </div>
-            <div class="marginless-bottom form-group col-md-4 col-sm-5 col-xs-8" ng-class="{ 'has-error' : formulario.nombre.$invalid && !formulario.nombre.$pristine, 'has-success': !formulario.nombre.$focused &&  formulario.nombre.$valid}">
-                <label for="nombre">Tipo de Contacto <span class="glyphicon glyphicon-asterisk"></span> :</label>
-                <input id="inputSuccess2" class="form-control has-success" name="nombre" required autofocus pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ.. ]{0,}" aria-describedby="helpBlock2" ng-model="$ctrl.candidato.nombre" ng-focus="focus=true" ng-blur="focus=false">
-                <span class="help-block" ng-class="!formulario.nombre.$error.pattern ? 'oculto' : ''">Sólo puede incluir letras</span>
+            <div class="input_content sin-margen form-group  col-md-offset-2 col-md-8 col-sm-3 container-fluid"
+                ng-class="{ 'has-error' : $ctrl.form.descripcion.$invalid && !$ctrl.form.descripcion.$pristine,
+                            'has-success'  : $ctrl.form.descripcion.$valid} ">
+                <label for="descripcion">Valor: </label>
+                <input  required ng-maxlength="50" class="form-control" name="descripcion" ng-model="$ctrl.tecnologia.descripcion" autofocus aria-describedby="helpBlock2">
+                <span ng-if="$ctrl.mode === 'view'" class="form-control">{{$ctrl.contacto.valor}}</span>
+                <span ng-class="!$ctrl.form.descripcion.$error.maxlength ? 'oculto' : ''" class="help-block">máximo 50 caracteres</span>
+<!-- ng-if="$ctrl.mode === 'edit'" -->
             </div>
-            <div class="marginless-bottom form-group col-md-4 col-sm-5 col-xs-8" ng-class="{ 'has-error' : formulario.apellido.$invalid && !formulario.apellido.$pristine, 'has-success': !formulario.apellido.$focused &&  formulario.apellido.$valid}">
-                <label for="apellido">Valor del Contacto :</label>
-                <input id="inputSuccess2" class="form-control has-success" name="apellido"  aria-describedby="helpBlock2" ng-model="$ctrl.candidato.apellido" ng-focus="focus=true" ng-blur="focus=false">
-            </div>
-            
-            <div class="form-group col-md-12 col-sm-12 col-xs-12">
-                <div class="botonera col-md-3 col-sm-5 col-xs-6 form-group ">
-                    <button type="button" ng-click="$ctrl.reset()" value="Descartar cambios" class="reset btn btn-default ">Descartar Cambios <span class ="glyphicon glyphicon-remove"></span></button>
-                    <button type="submit" ng-click="$ctrl.updateOrCreate($ctrl.candidato,formulario)" ng-disabled="formulario.$invalid" class="submit btn btn-primary">
-                  Guardar  <span class="glyphicon glyphicon-send"></span></button>
-                </div>
-            </div>
+        <div class="col-md-offset-8  col-sm-3">
+        <button type="button" class="btn btn-primary" ng-click="$ctrl.update($ctrl.tecnologia,$ctrl.$ctrl.form)"  ng-disabled="$ctrl.form.$invalid" >Guardar</button>
+
+            <button type="button" ng-click="$ctrl.reset($ctrl.form)" class="btn btn-primary" >Reiniciar</button>
         </div>
-    </form>
+      </form>
+
+    <div class="">
+      <!-- <pre>$ctrl.form = {{$ctrl.form | json}}</pre> -->
+    </div>
+  </div>
+    <div class="col-md-2 col-xs-2"></div>
 </div>
-<br><br>

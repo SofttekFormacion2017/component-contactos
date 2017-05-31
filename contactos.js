@@ -9,7 +9,6 @@ angular.module('ghr.contactos', []) // Creamos este modulo para la entidad conta
   .constant('contEntidad', 'contactos')
   .factory('contactosFactory', function crearContactos($http, contBaseUrl, contEntidad) {
     var serviceUrl = contBaseUrl + contEntidad;
-    console.log(serviceUrl);
     return {
       // sistema CRUD de contacto
       getAll: function getAll() {
@@ -17,8 +16,8 @@ angular.module('ghr.contactos', []) // Creamos este modulo para la entidad conta
           method: 'GET',
           url: serviceUrl
         }).then(function onSuccess(response) {
-            return response.data;
-          },
+          return response.data;
+        },
           function onFailirure(reason) {
 
           });
@@ -30,8 +29,8 @@ angular.module('ghr.contactos', []) // Creamos este modulo para la entidad conta
           url: serviceUrl,
           data: contacto
         }).then(function onSuccess(response) {
-            return response.data;
-          },
+          return response.data;
+        },
           function onFailirure(reason) {
 
           });
@@ -92,9 +91,41 @@ angular.module('ghr.contactos', []) // Creamos este modulo para la entidad conta
     //   return array[aleatorio(array.length)];
     // }
   })
+  .config(function (toastrConfig) { // Configura los toastr
+    angular.extend(toastrConfig, {
+      closeButton: true,
+      extendedTimeOut: 2000,
+      tapToDismiss: true
+    });
+  })
   .component('ghrContactosList', {
     templateUrl: '../bower_components/component-contactos/contactos-list.html',
     controller: generarContactos
+  })
+  .component('eliminarContactoModal', {
+    // El componente del modal
+    templateUrl: '../bower_components/component-contactos/eliminadoContactoModal.html',
+    bindings: {
+      resolve: '<',
+      close: '&',
+      dismiss: '&'
+    },
+    controller: function () {
+      const vm = this;
+      vm.$onInit = function () {
+        vm.selected = vm.resolve.seleccionado;
+      };
+      vm.ok = function (seleccionado) { // Este metodo nos sirve para marcar el candidato que se ha seleccionado
+        vm.close({
+          $value: seleccionado
+        });
+      };
+      vm.cancel = function () { // Este metodo cancela la operacion
+        vm.dismiss({
+          $value: 'cancel'
+        });
+      };
+    }
   })
   .run($log => {
     $log.log('Ejecutando Componente Contactos');
@@ -102,35 +133,64 @@ angular.module('ghr.contactos', []) // Creamos este modulo para la entidad conta
 
 function formularioContactoController($stateParams, contactosFactory, $state) {
   const vm = this; // Imprime por pantalla $stateParams
-  vm.update = function(user) {
+  vm.update = function (user) {
     //   var x = (contactosFactory.getAll().length)+1;
     //   console.log('ultimo objeto:' + contacto.id+'=' + = (contactosFactory.getAll().length)+1;);
     //   console.log('longitudad del array:'+ contactosFactory.getAll().length);
     if ($stateParams.id == 0) {
       console.log('creando nuevo contacto');
       delete $stateParams.id;
-      contactosFactory.create(vm.contacto).then(function(contacto) {
+      contactosFactory.create(vm.contacto).then(function (contacto) {
         $state.go($state.current, {
           id: contacto.id
         });
       });
     }
     if (vm.form.$dirty === true) {
-      contactosFactory.update(vm.contacto).then(function(contacto) {});
+      contactosFactory.update(vm.contacto).then(function (contacto) {});
       console.log('actualizando contacto');
     }
   };
 
-  vm.reset = function(form) {
+  vm.reset = function (form) {
     vm.contacto = angular.copy(vm.original);
   };
   if ($stateParams.id != 0) {
     vm.original = contactosFactory.read($stateParams.id).then(
-      function(contacto) {
+      function (contacto) {
         vm.contacto = contacto;
       }
     );
   }
+
+  vm.desplegar = function () {
+    vm.opcionesDesplegable = [{
+      tipo: 'Teléfono'
+    },
+    {
+      tipo: 'Correo'
+    },
+    {
+      tipo: 'Facebook'
+    },
+    {
+      tipo: 'LinkedIn'
+    },
+    {
+      tipo: 'Twitter'
+    }
+    ];
+    vm.selectTipo = vm.opcionesDesplegable[0];
+  };
+  vm.desplegar();
+
+  /**
+   * Setea el atributo $disty del formulario y
+   * del input pasado por parámetro a true
+   * @param  {[type]} formulario [description]
+   * @param  {[type]} input      [description]
+   * @return {[type]}            [description]
+   */
 
   // vm.reset();
   //
@@ -142,7 +202,7 @@ function formularioContactoController($stateParams, contactosFactory, $state) {
   // }
 }
 
-function generarContactos(contactosFactory, $uibModal, $log, $document) {
+function generarContactos(toastr, contactosFactory, $uibModal, $log, $document) {
   const vm = this;
   contactosFactory.getAll().then(function onSuccess(response) {
     vm.arrayContactos = response;
@@ -150,27 +210,28 @@ function generarContactos(contactosFactory, $uibModal, $log, $document) {
   });
 
   vm.currentPage = 1;
-  vm.setPage = function(pageNo) {
+  vm.setPage = function (pageNo) {
     vm.currentPage = pageNo;
   };
 
   vm.maxSize = 10; // Elementos mostrados por página
-  vm.open = function(id, nombre) {
+  vm.open = function (id, tipo, valor) {
     var modalInstance = $uibModal.open({
       component: 'eliminarContactoModal',
       resolve: {
-        seleccionado: function() {
+        seleccionado: function () {
           return id;
         }
       }
     });
 
-    modalInstance.result.then(function(selectedItem) {
+    modalInstance.result.then(function (selectedItem) {
       console.log('selectedItem -->' + selectedItem);
       vm.arrayContactos = contactosFactory.getAll();
-      contactosFactory.delete(selectedItem).then(function() {
-        contactosFactory.getAll().then(function(contacto) {
-          vm.arrayContactos = contacto;
+      contactosFactory.delete(selectedItem).then(function () {
+        toastr.success('elimanda correctamente');
+        contactosFactory.getAll().then(function (contactos) {
+          vm.arrayContactos = contactos;
         });
       });
     });
