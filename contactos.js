@@ -208,3 +208,4 @@ angular.module('ghr.contactos', []) // Creamos este modulo para la entidad conta
   .run($log => {
     $log.log('Ejecutando Componente Contactos');
   });
+
