@@ -15,12 +15,12 @@
                             <br>
                             <div class="btn-group" uib-dropdown>
                                 <button type="button" class="btn btn-default" uib-dropdown-toggle>
-                                      {{$ctrl.formatearDesplegable($ctrl.contacto.tipo) || $ctrl.formatearDesplegable($ctrl.opcionesDesplegable[0].tipo)}} <span class="caret"></span>
+                                      {{$ctrl.contacto.tipo || $ctrl.opcionesDesplegable[0].tipo}} <span class="caret"></span>
                                     <span class="sr-only">Split button!</span>
                                 </button>
                                 <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="split-button">
                                     <li role="menuitem" ng-repeat="opcion in $ctrl.opcionesDesplegable" value="{{opcion.tipo}}" ng-selected="$ctrl.contacto.tipo === opcion.tipo">
-                                        <a href="#" ng-click="$ctrl.contacto.tipo = opcion.tipo; $ctrl.setDirty(formulario, formulario.tipo)"">{{$ctrl.formatearDesplegable(opcion.tipo)}}</a>
+                                        <a href="#" ng-click="$ctrl.contacto.tipo = opcion.tipo; $ctrl.setTipo(formulario, formulario.tipo)">{{opcion.tipo}}</a>
                                     </li>
                                     <input ng-hide="true" name="tipo" ng-model="$ctrl.contacto.tipo">
                                 </ul>
