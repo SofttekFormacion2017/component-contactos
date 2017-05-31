@@ -64,6 +64,11 @@ angular.module('ghr.contactos', []) // Creamos este modulo para la entidad conta
             };
             vm.desplegar();
 
+            /**
+             * Muestra un icono social la lado del tipo de contacto
+             * @param  {[type]} tipo [description]
+             * @return {[type]}      [description]
+             */
             vm.mostrarIconoContacto = function(tipo) {
                 if (tipo == 'Teléfono') return 'phone';
                 else if (tipo == 'Correo') return 'envelope';
