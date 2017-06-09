@@ -1,15 +1,56 @@
-<div class="form-group col-md-2 col-sm-2 col-xs-2">
-    <label for="tipo">Tipo de Contacto <span class="glyphicon glyphicon-asterisk"></span> :</label>
-</div>
-<div class="form-group col-md-4 col-sm-4 col-xs-4">
-    <label for="valor">Valor del Contacto <span class="glyphicon glyphicon-asterisk"></span> :</label>
-</div>
-<div class="form-group col-md-6 col-sm-6 col-xs-6">
-    <label class="oculto"><span class="glyphicon glyphicon-asterisk"></span></label>
-</div>
-<div class="formulario contactos-list" ng-repeat="contacto in $ctrl.arrayContactos">
-    <div class="form-group col-md-2 col-sm-2 col-xs-2">
-        <div ng-if="$ctrl.mode === 'edit'" class="btn-group" uib-dropdown>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="row">
+          <div class="form-group col-md-2 col-sm-2 col-xs-2">
+          <label for="nombre">Tipo de contacto <span  class="glyphicon glyphicon-asterisk"></span> :</label>
+          </div>
+          <div class="form-group col-md-4 col-sm-4 col-xs-4">
+          <label for="nivel">Nombre de contacto <span  class="glyphicon glyphicon-asterisk"></span> :</label>
+          </div>
+          <div class="form-group col-md-6 col-sm-6 col-xs-6">
+          <label class="oculto"><span class="glyphicon glyphicon-asterisk"></span></label></div>
+    </div>
+    <div class="formulario contactos-list" ng-repeat="contacto in $ctrl.arrayContactos">
+      <div class="row" ng-if="$ctrl.mode === 'edit'">
+
+        <div class="form-group col-md-2 col-sm-2 col-xs-2">
+          <div  class="btn-group" uib-dropdown>
+              <button type="button" class="btn btn-default" uib-dropdown-toggle>
+                  <span class="fa fa-{{$ctrl.mostrarIconoContacto(contacto.tipo)}}"></span>
+                  {{contacto.tipo || $ctrl.opcionesDesplegable[0].tipo}} <span class="caret"></span>
+                  <span class="sr-only">Split button!</span>
+              </button>
+              <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="split-button">
+                  <li role="menuitem" ng-repeat="opcion in $ctrl.opcionesDesplegable" value="{{opcion.tipo}}" ng-selected="contacto.tipo === opcion.tipo">
+                      <a href="#" ng-click="contacto.tipo = opcion.tipo; $ctrl.setDirty(formulario, formulario.tipo)"><span class="fa fa-{{opcion.icon}}"></span> {{opcion.tipo}}</a>
+                  </li>
+                  <input ng-hide="true" name="tipo" ng-model="contacto.tipo">
+              </ul>
+          </div>
+          </div>
+          <div class="form-group col-md-8 col-sm-8 col-xs-8">
+              <input  class="form-control has-success" name="valor" required aria-describedby="helpBlock2" ng-model="contacto.valor" ng-focus="focus=true" ng-blur="focus=false">
+          </div>
+          <div class="form-group col-md-2 col-sm-2 col-xs-2">
+            <span class="btn btn-danger glyphicon glyphicon-trash" ng-click="$ctrl.borrar($ctrl.contacto.id)"></span>
+          </div>
+        </div>
+        <div class="row" ng-if="$ctrl.mode === 'view'">
+            <div class="form-group col-md-2 col-sm-2 col-xs-2">
+            <span ng-if="$ctrl.mode === 'view'" class="form-control"><span class="fa fa-{{$ctrl.mostrarIconoContacto(contacto.tipo)}}"></span> {{contacto.tipo}}</span>
+            </div>
+            <div class="form-group col-md-10 col-sm-10 col-xs-10">
+              <span ng-if="$ctrl.mode === 'view'" class="form-control">{{contacto.valor}}</span>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="row" ng-if="$ctrl.mode === 'edit'">
+      <div class="form-group col-md-2 col-sm-2 col-xs-2">
+
+        <div ng-if="$ctrl.mode ==='edit' && $ctrl.modos === 'aparece'" class="btn-group" uib-dropdown>
             <button type="button" class="btn btn-default" uib-dropdown-toggle>
                 <span class="fa fa-{{$ctrl.mostrarIconoContacto(contacto.tipo)}}"></span>
                 {{contacto.tipo || $ctrl.opcionesDesplegable[0].tipo}} <span class="caret"></span>
@@ -22,11 +63,25 @@
                 <input ng-hide="true" name="tipo" ng-model="contacto.tipo">
             </ul>
         </div>
-        <span ng-if="$ctrl.mode === 'view'" class="form-control"><span class="fa fa-{{$ctrl.mostrarIconoContacto(contacto.tipo)}}"></span> {{contacto.tipo}}</span>
+
+      </div>
+      <div class="form-group col-md-8 col-sm-8 col-xs-8">
+        <input  ng-if="$ctrl.mode ==='edit' && $ctrl.modos === 'aparece'"class="form-control has-success" name="valor" required aria-describedby="helpBlock2" ng-model="" ng-focus="focus=true" ng-blur="focus=false">
+      </div>
+      <div class="form-group col-md-2 col-sm-2 col-xs-2" ng-if="$ctrl.modos ==='aparece'">
+        <span class="btn btn-primary glyphicon glyphicon-plus" ng-click="$ctrl.aparece()"></span>
+      </div>
     </div>
-    <div class="form-group col-md-10 col-sm-10 col-xs-10">
-        <input ng-if="$ctrl.mode === 'edit'" class="form-control has-success" name="valor" required aria-describedby="helpBlock2" ng-model="contacto.valor" ng-focus="focus=true" ng-blur="focus=false">
-        <span ng-if="$ctrl.mode === 'view'" class="form-control">{{contacto.valor}}</span>
+
+    <div class="row" ng-if="$ctrl.mode === 'edit'">
+      <div class="form-group col-md-2 col-sm-2 col-xs-2">
+      </div>
+      <div class="form-group col-md-8 col-sm-8 col-xs-8">
+      </div>
+      <div class="form-group col-md-2 col-sm-2 col-xs-2" ng-if="$ctrl.mode ==='edit' && $ctrl.modos === ''">
+        <span class="btn btn-primary glyphicon glyphicon-plus" ng-click="$ctrl.aparece()"></span>
+      </div>
     </div>
+
+  </div>
 </div>
-<br><br>
