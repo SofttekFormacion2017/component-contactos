@@ -1,17 +1,29 @@
-angular.module('ghr.contactos', []) // Creamos este modulo para la entidad contactos
+angular.module('ghr.contactos', ['toastr']) // Creamos este modulo para la entidad contactos
     .component('ghrContactos', { // Componente que contiene la url que indica su html
         templateUrl: '../bower_components/component-contactos/contactos.html',
         // El controlador de ghrContactos
-        controller($stateParams, contactosFactory, $state) {
+        controller($stateParams, contactosFactory, $state,toastr) {
             const vm = this;
 
             vm.mode = $stateParams.mode;
-
+            vm.modos = '';
+            vm.aparece = function () {
+              vm.modos = 'aparece';
+            };
             contactosFactory.getAll().then(function onSuccess(response) {
                 vm.arrayContactos = response.filter(function(contacto) {
                     return contacto.idCandidato == $stateParams.id;
                 });
             });
+
+            vm.borrar = function (contactoId) {
+              contactosFactory.delete(contactoId).then(function () {
+                toastr.success('El requisito se ha borrado correctamente');
+                $state.go($state.current, {
+                  mode: 'view'
+                });
+              });
+            };
 
             vm.update = function(user) {
                 if ($stateParams.id == 0) {
@@ -173,5 +185,3 @@ angular.module('ghr.contactos', []) // Creamos este modulo para la entidad conta
     .run($log => {
         $log.log('Ejecutando Componente Contactos');
     });
-
-
