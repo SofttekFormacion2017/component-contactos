@@ -1,4 +1,3 @@
-
 <div class="row">
   <div class="col-md-12">
     <div class="row">
@@ -13,6 +12,7 @@
     </div>
     <div class="formulario contactos-list" ng-repeat="contacto in $ctrl.arrayContactos">
       <div class="row" ng-if="$ctrl.mode === 'edit'">
+
         <div class="form-group col-md-2 col-sm-2 col-xs-2">
           <div  class="btn-group" uib-dropdown>
               <button disabled type="button" class="btn btn-default" uib-dropdown-toggle>
@@ -41,24 +41,28 @@
             </div>
             <div class="form-group col-md-10 col-sm-10 col-xs-10">
               <span ng-if="$ctrl.mode === 'view'" class="form-control">{{contacto.valor}}</span>
+
             </div>
         </div>
     </div>
+
     <div class="row" ng-if="$ctrl.mode === 'edit'">
       <div class="form-group col-md-2 col-sm-2 col-xs-2">
+
         <div ng-if="$ctrl.mode ==='edit' && $ctrl.modos === 'aparece'" class="btn-group" uib-dropdown>
-            <button type="button" class="btn btn-default" uib-dropdown-toggle>
-                <span class="fa fa-{{$ctrl.mostrarIconoContacto(contacto.tipo)}}"></span>
-                {{contacto.tipo || $ctrl.opcionesDesplegable[0].tipo}} <span class="caret"></span>
+          <button type="button" class="btn btn-default" uib-dropdown-toggle>
+                <span class="fa fa-{{$ctrl.mostrarIconoContacto($ctrl.contacto.tipo)}}"></span>
+                {{$ctrl.contacto.tipo || $ctrl.opcionesDesplegable[0].tipo}} <span class="caret"></span>
                 <span class="sr-only">Split button!</span>
             </button>
             <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="split-button">
-                <li role="menuitem" ng-repeat="opcion in $ctrl.opcionesDesplegable" value="{{opcion.tipo}}" ng-selected="contacto.tipo === opcion.tipo">
-                    <a href="#" ng-click="contacto.tipo = opcion.tipo; $ctrl.setDirty(formulario, formulario.tipo)"><span class="fa fa-{{opcion.icon}}"></span> {{opcion.tipo}}</a>
+                <li role="menuitem" ng-repeat="opcion in $ctrl.opcionesDesplegable" value="{{opcion.tipo}}" ng-selected="$ctrl.contacto.tipo === opcion.tipo">
+                    <a href="#" ng-click="$ctrl.contacto.tipo = opcion.tipo; $ctrl.setDirty(formulario, formulario.tipo)"><span class="fa fa-{{opcion.icon}}"></span> {{opcion.tipo}}</a>
                 </li>
-                <input ng-hide="true" name="tipo" ng-model="contacto.tipo">
+                <input ng-hide="true" name="tipo" ng-model="$ctrl.contacto.tipo">
             </ul>
         </div>
+
       </div>
       <div class="form-group col-md-8 col-sm-8 col-xs-8">
         <input  ng-if="$ctrl.mode ==='edit' && $ctrl.modos === 'aparece'"class="form-control has-success" name="valor" required aria-describedby="helpBlock2" ng-model="$ctrl.valor" ng-focus="focus=true" ng-blur="focus=false">
@@ -67,6 +71,7 @@
         <span class="btn btn-primary glyphicon glyphicon-plus" ng-click="$ctrl.aparece()"></span>
       </div>
     </div>
+
     <div class="row" ng-if="$ctrl.mode === 'edit'">
       <div class="form-group col-md-2 col-sm-2 col-xs-2">
       </div>
@@ -76,5 +81,6 @@
         <span class="btn btn-primary glyphicon glyphicon-plus" ng-click="$ctrl.aparece()"></span>
       </div>
     </div>
+
   </div>
 </div>
