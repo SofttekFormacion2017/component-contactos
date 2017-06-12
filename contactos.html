@@ -32,7 +32,7 @@
               <input  class="form-control has-success" name="valor" required aria-describedby="helpBlock2" ng-model="contacto.valor" ng-focus="focus=true" ng-blur="focus=false">
           </div>
           <div class="form-group col-md-2 col-sm-2 col-xs-2">
-            <span class="btn btn-danger glyphicon glyphicon-trash" ng-click="$ctrl.borrar($ctrl.contacto.id)"></span>
+            <span class="btn btn-danger glyphicon glyphicon-trash" ng-click="$ctrl.borrar(contacto.id)"></span>
           </div>
         </div>
         <div class="row" ng-if="$ctrl.mode === 'view'">
@@ -61,7 +61,7 @@
         </div>
       </div>
       <div class="form-group col-md-8 col-sm-8 col-xs-8">
-        <input  ng-if="$ctrl.mode ==='edit' && $ctrl.modos === 'aparece'"class="form-control has-success" name="valor" required aria-describedby="helpBlock2" ng-model="" ng-focus="focus=true" ng-blur="focus=false">
+        <input  ng-if="$ctrl.mode ==='edit' && $ctrl.modos === 'aparece'"class="form-control has-success" name="valor" required aria-describedby="helpBlock2" ng-model="$ctrl.valor" ng-focus="focus=true" ng-blur="focus=false">
       </div>
       <div class="form-group col-md-2 col-sm-2 col-xs-2" ng-if="$ctrl.modos ==='aparece'">
         <span class="btn btn-primary glyphicon glyphicon-plus" ng-click="$ctrl.aparece()"></span>
