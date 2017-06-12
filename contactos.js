@@ -12,7 +12,7 @@ angular.module('ghr.contactos', ['toastr']) // Creamos este modulo para la entid
             };
             contactosFactory.getAll().then(function onSuccess(response) {
                 vm.arrayContactos = response.filter(function(contacto) {
-                    return contacto.idCandidato == $stateParams.id;
+                    return contacto.candidatoId == $stateParams.id;
                 });
             });
 
