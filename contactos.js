@@ -2,7 +2,7 @@ angular.module('ghr.contactos', ['toastr']) // Creamos este modulo para la entid
     .component('ghrContactos', { // Componente que contiene la url que indica su html
         templateUrl: '../bower_components/component-contactos/contactos.html',
         // El controlador de ghrContactos
-        controller($stateParams, contactosFactory, $state,toastr) {
+        controller($stateParams, contactosFactory, $state,toastr,candidatoFactory) {
             const vm = this;
 
             vm.mode = $stateParams.mode;
@@ -12,11 +12,12 @@ angular.module('ghr.contactos', ['toastr']) // Creamos este modulo para la entid
             };
             contactosFactory.getAll().then(function onSuccess(response) {
                 vm.arrayContactos = response.filter(function(contacto) {
-                    return contacto.idCandidato == $stateParams.id;
+                    return contacto.candidatoId == $stateParams.id;
                 });
             });
 
             vm.borrar = function (contactoId) {
+              console.log(contactoId);
               contactosFactory.delete(contactoId).then(function () {
                 toastr.success('El requisito se ha borrado correctamente');
                 $state.go($state.current, {
