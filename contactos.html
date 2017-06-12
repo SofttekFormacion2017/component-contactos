@@ -67,9 +67,7 @@
       <div class="form-group col-md-8 col-sm-8 col-xs-8">
         <input  ng-if="$ctrl.mode ==='edit' && $ctrl.modos === 'aparece'"class="form-control has-success" name="valor" required aria-describedby="helpBlock2" ng-model="$ctrl.valor" ng-focus="focus=true" ng-blur="focus=false">
       </div>
-      <div class="form-group col-md-2 col-sm-2 col-xs-2" ng-if="$ctrl.modos ==='aparece'">
-        <span class="btn btn-primary glyphicon glyphicon-plus" ng-click="$ctrl.aparece()"></span>
-      </div>
+      
     </div>
 
     <div class="row" ng-if="$ctrl.mode === 'edit'">
