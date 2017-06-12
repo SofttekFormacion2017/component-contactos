@@ -19,7 +19,7 @@ angular.module('ghr.contactos', ['toastr']) // Creamos este modulo para la entid
             vm.borrar = function (contactoId) {
               console.log(contactoId);
               contactosFactory.delete(contactoId).then(function () {
-                toastr.success('El requisito se ha borrado correctamente');
+                toastr.success('El contacto se ha borrado correctamente');
                 $state.go($state.current, {
                   mode: 'view'
                 });
