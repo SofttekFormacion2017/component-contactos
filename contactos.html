@@ -39,10 +39,10 @@
     <div class="row" ng-if="$ctrl.mode === 'edit'">
       <div class="form-group col-md-3 col-sm-2 col-xs-2">
 
-        <div ng-if="$ctrl.mode ==='edit' && $ctrl.modos === 'aparece'" class="btn-group" uib-dropdown>
+        <div ng-if="$ctrl.mode ==='edit' && $ctrl.modos === 'aparece'" class="btn-group"  ng-init="contactos = ($ctrl.arrayContactos.tipo == undefined) ? $ctrl.opcionesDesplegable[0].tipo : $ctrl.opcionesDesplegable[0].tipo" uib-dropdown >
           <button type="button" class="btn btn-default" uib-dropdown-toggle>
-                <span class="fa fa-{{$ctrl.mostrarIconoContacto($ctrl.contacto.tipo)}}"></span>
-                {{$ctrl.contacto.tipo || $ctrl.opcionesDesplegable[0].tipo}} <span class="caret"></span>
+                <span class="fa fa-{{$ctrl.mostrarIconoContacto($ctrl.contacto.tipo)||$ctrl.mostrarIconoContacto(contactos)}}"></span>
+                {{$ctrl.contacto.tipo || $ctrl.opcionesDesplegable[0].tipo|| contactos }} <span class="caret"></span>
                 <span class="sr-only">Split button!</span>
             </button>
             <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="split-button">
